@@ -1,0 +1,66 @@
+<form action="pAdmin.php?b=6&flag=1" method="POST" align ="center">
+    <input type="text" name="valueSearch">
+    <input type="submit" name="btnTim" value="Tìm">
+</form>
+
+<table align="center" cellspacing="0" cellpadding="7">
+      <tr>
+        <th>Mã sản phẩm</th>
+        <th>Tên sản phẩm</th>
+        <th>Hình URL</th>
+        <th>Giá</th>
+        <th>Ngày nhập</th>
+        <th>Số lượng tồn</th>
+        <th>Số lượng bán</th>
+        <th>Số lượng xem</th>
+        <th>Mô tả</th>
+        <th>Bị xóa</th>
+        <th>Mã loại sản phẩm</th>
+        <th>Mã hãng sản xuất</th>
+      </tr>
+      <?php
+        if(isset($_GET["flag"]) && $_GET["flag"] == 1)
+        {
+            $tuKhoa = $_POST["valueSearch"];
+        
+            
+      
+            $sql = "SELECT MaSanPham, TenSanPham, HinhURL, GiaSanPham, NgayNhap, SoLuongTon, SoLuongBan, SoLuongXem, MoTa, BiXoa, MaLoaiSanPham, MaHangSanXuat
+                    FROM SanPham WHERE BiXoa = false and TenSanPham like '%$tuKhoa%'";
+            $result = DataProvider::ExecuteQuery($sql);
+            while($row = mysqli_fetch_array($result))
+            {
+                $maSP = $row["MaSanPham"];
+                $tenSanPham = $row["TenSanPham"];
+                $hinhURL = $row["HinhURL"];
+                $giaSanPham = $row["GiaSanPham"];
+                $ngayNhap = $row["NgayNhap"];
+                $soLuongTon = $row["SoLuongTon"];
+                $soLuongBan = $row["SoLuongBan"];
+                $soLuongXem = $row["SoLuongXem"];
+                $moTa= $row["MoTa"];
+                $biXoa = $row["BiXoa"];
+                $maLoai =$row["MaLoaiSanPham"];
+                $maHangSanXuat = $row["MaHangSanXuat"];
+                ?>
+                <tr>
+                <td><?php echo"$maSP" ?></td>
+                <td><?php echo"$tenSanPham" ?></td>
+                <td><?php echo"$hinhURL" ?></td>
+                <td><?php echo "$giaSanPham" ?></td>
+                <td><?php echo "$ngayNhap" ?></td>
+                <td><?php echo"$soLuongTon" ?></td>
+                <td><?php echo "$soLuongBan" ?></td>
+                <td><?php echo"$soLuongXem" ?></td>
+                <td><?php echo"$moTa" ?></td>
+                <td><?php echo"$biXoa" ?></td>
+                <td><?php echo"$maLoai" ?></td>
+                <td><?php echo"$maHangSanXuat" ?></td>
+              </tr>
+              <?php
+            }
+      ?>
+    </table>
+    <?php
+        }
+    ?>
